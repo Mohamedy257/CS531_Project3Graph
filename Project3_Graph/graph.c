@@ -9,7 +9,6 @@
 #include <string.h>
 #include <ctype.h>
 
-int Vertics[MAX_VERTICES];
 //Helpers
 int isValidVertex(int v1);
 int charToInt(char *c);
@@ -33,8 +32,6 @@ Graph *graph_initialize()
     
     for (;i<MAX_VERTICES ;i++)
     {
-        //initialize Vertics array
-        Vertics[i] = 0;
         graph->max_vertex = 0;
         graph->visited[i] = 0;
         //initialize adj_matrix
@@ -65,7 +62,7 @@ int graph_add_vertex(Graph *graph, int v1)
         
     }
     
-    Vertics[v1] = 1;
+    graph->visited[v1] = 1;
     if(v1 > graph->max_vertex)
     {
         graph->max_vertex = v1;
@@ -77,12 +74,12 @@ int graph_add_vertex(Graph *graph, int v1)
 int graph_contains_vertex(Graph *graph, int v1)
 {
     //Check if vertex is invalid or graph is null
-    if (graph == NULL || !isValidVertex(v1)|| (Vertics[v1] == 0))
+    if (graph == NULL || !isValidVertex(v1)|| (graph->visited[v1] == 0))
     {
         return 0;
     }
     
-    if (Vertics[v1] == 1)
+    if (graph->visited[v1] == 1)
     {
         return 1;
     }
@@ -112,7 +109,7 @@ int graph_remove_vertex(Graph *graph, int v1)
         }
     }
     
-    Vertics[v1] = 0;
+    graph->visited[v1] = 0;
     
     return 0;
 }
@@ -179,7 +176,7 @@ int graph_num_vertices(Graph *graph)
     int i = 0,count = 0;
     for(;(i<=graph->max_vertex);i++)
     {
-        if(Vertics[i] == 1)
+        if(graph->visited[i] == 1)
         count++;
     }
     
@@ -342,19 +339,20 @@ int graph_has_path(Graph *graph, int v1, int v2)
     // order to find the required path
     int front =0;
     int rear =0;
+    int *queue = (int *) malloc(MAX_VERTICES * sizeof(int));
     if (graph == NULL || !graph_contains_vertex(graph, v1) || !graph_contains_vertex(graph, v1))
     {
         return 0;
     }
     
-    graph->visited[rear++] = v1;
+    queue[rear++] = v1;
     
    while(front!=rear)
     {
         int i=0;
             for(;i<=graph->max_vertex;i++)
             {
-                int row =graph->visited[front];
+                int row =queue[front];
                 if(graph->adj_matrix[row][i] > 0 && i == v2)
                 {
                     return 1;
@@ -363,13 +361,15 @@ int graph_has_path(Graph *graph, int v1, int v2)
                 {
                     if(graph->adj_matrix[row][i] > 0 && rear+1 < MAX_VERTICES)
                     {
-                        graph->visited[rear++] = i;
+                        queue[rear++] = i;
                     }
                     
                 }
             }
         front++;
     }
+    free(queue);
+    Dispose(queue);
     return 0;
 }
 
@@ -584,11 +584,7 @@ int processfile(Graph *graph,FILE *fp)
                 case 0:
                     if(!graph_contains_vertex(graph, number))
                     {
-                       int result = graph_add_vertex(graph, number);
-                        if(result == -1)
-                        {
-                            return -1;
-                        }
+                         graph_add_vertex(graph, number);
                     }
                     vertex =number;
                     break;
