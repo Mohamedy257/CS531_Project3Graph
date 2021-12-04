@@ -335,8 +335,8 @@ int *graph_get_successors(Graph *graph, int v1)
 
 int graph_has_path(Graph *graph, int v1, int v2)
 {
-    // uses visited array as a queue to queue the vertics that need to be search in
-    // order to find the required path
+    /* uses array as a queue to queue the vertics that need to be search
+       in order to find the required path*/
     int front =0;
     int rear =0;
     int *queue = (int *) malloc(MAX_VERTICES * sizeof(int));
@@ -378,6 +378,12 @@ void graph_print(Graph *graph)
 {
     int i =0;
     int j = 0;
+    printf("*Legand:*\n");
+    printf("1- dot(.) means the vertex exist but no weight for that edge.\n");
+    printf("2- (V) means the vertex exist but no self loop for it.\n");
+    printf("3- dash(-) means the vertex doesn't exist on the graph.\n");
+    printf("Have a nice Graph LOOOL !!\n");
+    printf("----------------------------------------------------------------\n");
     if(graph == NULL)
     {
         printf("Graph is empty!");
@@ -386,27 +392,28 @@ void graph_print(Graph *graph)
     
     for(;j<=graph->max_vertex;j++)
     {
-        printf("\t%d\t",j);
+            printf("\t%d\t",j);
     }
     printf("\n");
     for(;i<=graph->max_vertex;i++)
     {
         int j=0;
         printf("%d\t",i);
-        if(graph_contains_vertex(graph, i))
-        {
         for(;j<=graph->max_vertex;j++)
         {
                 if (graph->adj_matrix[i][j] == 0)
                 {
-                    printf("-\t\t");
+                    if(i==j && graph_contains_vertex(graph, j))
+                        printf("(V)\t\t");
+                    else if(!graph_contains_vertex(graph, i))
+                        printf("-\t\t");
+                    else
+                    printf(".\t\t");
                 }
                 else
                 {
                     printf("%d\t\t",graph->adj_matrix[i][j]);
                 }
-                
-        }
         }
             printf("\n");
     }
@@ -509,7 +516,7 @@ int graph_save_file(Graph *graph, char *filename)
 //helper methods
 int isValidVertex(int v1)
 {
-    if (v1 < 0 || v1 > MAX_VERTICES)
+    if (v1 < 0 || v1 >= MAX_VERTICES)
     {
         return 0;
     }
