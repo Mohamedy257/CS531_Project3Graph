@@ -28,6 +28,7 @@
 		8917CFC7274C0FD0009A169D /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		8917CFCF274C107A009A169D /* graph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		8917CFD0274C107A009A169D /* graph.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graph.c; sourceTree = "<group>"; };
+		89B744012767960400A3F918 /* Project3_GL.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Project3_GL.pdf; path = ../../../../../Downloads/Project3_GL.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 				8917CFCF274C107A009A169D /* graph.h */,
 				8917CFD0274C107A009A169D /* graph.c */,
 				8917CFC7274C0FD0009A169D /* main.c */,
+				89B744012767960400A3F918 /* Project3_GL.pdf */,
 			);
 			path = Project3_Graph;
 			sourceTree = "<group>";
