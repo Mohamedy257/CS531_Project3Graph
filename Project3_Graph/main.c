@@ -239,7 +239,7 @@ void test_graph2(char * argv[])
 {
     Graph * graph = NULL;
     graph = graph_initialize();
-    if(graph_load_file(graph,argv[2]) == 0)
+    if(graph_load_file(graph,argv[1]) == 0)
     {
     printf("Metrics:\n");
     test_graph_num_vertex(graph);
